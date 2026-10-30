@@ -118,15 +118,14 @@ footer{margin-top:28px;display:flex;justify-content:space-between;gap:8px;flex-w
 .band{display:none}
 @media (min-width:1240px) and (hover:hover) and (pointer:fine){
   body{position:relative}
-  .band{--bw:calc((100vw - 980px)/2 - 44px);--shift:0px;display:block;position:absolute;top:28px;bottom:28px;z-index:0;width:var(--bw);border-radius:9999px;background:var(--wine);pointer-events:none;overflow:hidden}
-  .band.left{left:28px}
-  .band.right{right:28px}
-  /* Pellicule : perforations blanches sur les deux bords, images du film au centre ; tout glisse au défilement */
-  .band::before,.band::after,.band i{content:"";position:absolute;top:calc(var(--bw)/2);bottom:calc(var(--bw)/2);background-repeat:repeat-y;background-position:0 var(--shift)}
-  .band::before,.band::after{width:15%;background-size:100% auto;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='30'%3E%3Crect x='2' y='5' width='16' height='16' rx='4.5' fill='%23fbf7f4'/%3E%3C/svg%3E")}
-  .band::before{left:7%}
-  .band::after{right:7%}
-  .band i{left:30%;right:30%;background-size:100% auto;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='58'%3E%3Crect x='0' y='4' width='40' height='50' rx='9' fill='%23000000' fill-opacity='.16'/%3E%3C/svg%3E")}
+  .band{--shift:0px;display:block;position:absolute;top:0;bottom:0;z-index:0;width:72px;background:var(--wine);pointer-events:none;overflow:hidden}
+  .band.left{left:0}
+  .band.right{right:0}
+  /* Pellicule sobre : bords droits, une rangée de perforations carrées de chaque côté, qui défile */
+  .band::before,.band::after{content:"";position:absolute;top:0;bottom:0;width:12px;background-repeat:repeat-y;background-position:0 var(--shift);background-size:12px 26px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='26'%3E%3Crect width='12' height='12' rx='3' fill='%23fbf7f4'/%3E%3C/svg%3E")}
+  .band::before{left:12px}
+  .band::after{right:12px}
+  .band i{display:none}
   .wrap{position:relative;z-index:1}
 }
 /* Ordinateur uniquement : le croquis se dessine, et un curseur rond accompagne la souris */
