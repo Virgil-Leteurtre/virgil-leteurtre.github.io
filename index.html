@@ -117,10 +117,11 @@ footer{margin-top:28px;display:flex;justify-content:space-between;gap:8px;flex-w
 /* Ordinateur large : deux bandes bordeaux de part et d'autre du contenu, une pastille claire y glisse au défilement */
 .band{display:none}
 @media (min-width:1240px) and (hover:hover) and (pointer:fine){
-  .band{display:block;position:fixed;top:28px;bottom:28px;z-index:0;width:calc((100vw - 980px)/2 - 44px);border-radius:40px;background:var(--wine);pointer-events:none}
+  body{position:relative}
+  .band{display:block;position:absolute;top:28px;bottom:28px;z-index:0;width:calc((100vw - 980px)/2 - 44px);border-radius:9999px;background:var(--wine);pointer-events:none}
   .band.left{left:28px}
   .band.right{right:28px}
-  .band i{position:absolute;left:clamp(12px,18%,40px);right:clamp(12px,18%,40px);top:0;height:24%;border-radius:999px;background:var(--paper);will-change:transform}
+  .band i{position:absolute;left:16%;right:16%;top:0;border-radius:9999px;background:var(--paper);will-change:transform}
   .wrap{position:relative;z-index:1}
 }
 /* Ordinateur uniquement : le croquis se dessine, et un curseur rond accompagne la souris */
@@ -257,10 +258,17 @@ document.querySelectorAll('.copy').forEach(function(b){
   var bands=[].slice.call(document.querySelectorAll('.band')),slots=bands.map(function(b){return b.querySelector('i')});
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,cur=0,target=0,running=false;
   function progress(){var max=document.documentElement.scrollHeight-innerHeight;return max>0?Math.min(1,Math.max(0,scrollY/max)):0}
-  function place(p){bands.forEach(function(b,i){var h=b.clientHeight,sh=slots[i].offsetHeight,pad=h*.06,travel=h-sh-pad*2,q=1-p;slots[i].style.transform='translateY('+(pad+q*travel)+'px)'})}
+  function size(){bands.forEach(function(b,i){var w=b.clientWidth*.68;slots[i].style.height=Math.min(innerHeight*.72,Math.max(w*2.6,innerHeight*.42))+'px'})}
+  function place(p){bands.forEach(function(b,i){
+    var bh=b.clientHeight,sh=slots[i].offsetHeight,inset=b.clientWidth*.16,pad=Math.max(28,innerHeight*.06);
+    var view=pad+(1-p)*(innerHeight-sh-pad*2);           /* position voulue dans l'écran : en bas en haut de page, en haut en bas de page */
+    var y=scrollY+view-b.offsetTop;                      /* convertie dans la bande, qui défile avec la page */
+    y=Math.min(bh-sh-inset,Math.max(inset,y));
+    slots[i].style.transform='translateY('+y+'px)'})}
   function tick(){cur+=(target-cur)*.12;place(cur);if(Math.abs(target-cur)>.0005){requestAnimationFrame(tick)}else{cur=target;place(cur);running=false}}
-  function update(){if(!mq.matches)return;target=progress();if(reduce){cur=target;place(cur);return}if(!running){running=true;requestAnimationFrame(tick)}}
-  addEventListener('scroll',update,{passive:true});addEventListener('resize',function(){place(cur);update()});
+  function update(){if(!mq.matches)return;target=progress();if(reduce||!running){place(cur)}if(reduce){cur=target;place(cur);return}if(!running){running=true;requestAnimationFrame(tick)}}
+  addEventListener('scroll',update,{passive:true});addEventListener('resize',function(){size();place(cur);update()});
+  size();
   cur=target=progress();place(cur);
 })();
 </script>
