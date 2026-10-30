@@ -118,14 +118,15 @@ footer{margin-top:28px;display:flex;justify-content:space-between;gap:8px;flex-w
 .band{display:none}
 @media (min-width:1240px) and (hover:hover) and (pointer:fine){
   body{position:relative}
-  .band{--shift:0px;display:block;position:absolute;top:0;bottom:0;z-index:0;width:72px;background:var(--wine);pointer-events:none;overflow:hidden}
-  .band.left{left:0}
-  .band.right{right:0}
-  /* Pellicule sobre : bords droits, une rangée de perforations carrées de chaque côté, qui défile */
-  .band::before,.band::after{content:"";position:absolute;top:0;bottom:0;width:12px;background-repeat:repeat-y;background-position:0 var(--shift);background-size:12px 26px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='26'%3E%3Crect width='12' height='12' rx='3' fill='%23fbf7f4'/%3E%3C/svg%3E")}
+  .band{--g:calc((100vw - 980px)/2);--w:min(230px,calc(var(--g) - 56px));--shift:0px;display:block;position:absolute;top:0;bottom:0;z-index:0;width:var(--w);border-left:1.5px solid var(--wine);border-right:1.5px solid var(--wine);pointer-events:none;overflow:hidden}
+  .band.left{left:calc((var(--g) - var(--w))/2)}
+  .band.right{right:calc((var(--g) - var(--w))/2)}
+  /* Pellicule au trait : deux filets, perforations bordeaux, images du film en contour fin ; tout défile */
+  .band::before,.band::after,.band i{content:"";position:absolute;top:0;bottom:0;background-repeat:repeat-y;background-position:0 var(--shift)}
+  .band::before,.band::after{width:12px;background-size:12px 26px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='26'%3E%3Crect width='12' height='12' rx='3' fill='%237b1e2c'/%3E%3C/svg%3E")}
   .band::before{left:12px}
   .band::after{right:12px}
-  .band i{display:none}
+  .band i{display:block;left:40px;right:40px;background-size:100% auto;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='134'%3E%3Crect x='1' y='7' width='98' height='120' rx='12' fill='none' stroke='%237b1e2c' stroke-opacity='.45' stroke-width='1.5' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E")}
   .wrap{position:relative;z-index:1}
 }
 /* Ordinateur uniquement : le croquis se dessine, et un curseur rond accompagne la souris */
