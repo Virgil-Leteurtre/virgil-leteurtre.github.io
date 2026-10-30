@@ -118,23 +118,15 @@ footer{margin-top:28px;display:flex;justify-content:space-between;gap:8px;flex-w
 .band{display:none}
 @media (min-width:1240px) and (hover:hover) and (pointer:fine){
   body{position:relative}
-  .band{--bw:calc((100vw - 980px)/2 - 44px);display:block;position:absolute;top:28px;bottom:28px;z-index:0;width:var(--bw);border-radius:9999px;background:var(--wine);pointer-events:none;overflow:hidden}
+  .band{--bw:calc((100vw - 980px)/2 - 44px);--shift:0px;display:block;position:absolute;top:28px;bottom:28px;z-index:0;width:var(--bw);border-radius:9999px;background:var(--wine);pointer-events:none;overflow:hidden}
   .band.left{left:28px}
   .band.right{right:28px}
-  /* Décor des bandes, hors des bouts arrondis */
-  .band::before,.band::after{content:"";position:absolute;top:calc(var(--bw)/2);bottom:calc(var(--bw)/2)}
-  /* Gauche, cinéma : deux rangées de perforations de pellicule */
-  .band.left::before,.band.left::after{width:11%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='34'%3E%3Crect x='2' y='4' width='16' height='22' rx='5' fill='%23ffffff' fill-opacity='.2'/%3E%3C/svg%3E");background-size:100% auto;background-repeat:repeat-y}
-  .band.left::before{left:8%}
-  .band.left::after{right:8%}
-  /* Droite, architecture : une règle graduée de chaque côté */
-  .band.right::before,.band.right::after{width:16%;background:
-    repeating-linear-gradient(180deg,rgba(255,255,255,.34) 0 2px,transparent 2px 60px) 0 0/100% 100% no-repeat,
-    repeating-linear-gradient(180deg,rgba(255,255,255,.2) 0 1.5px,transparent 1.5px 12px) 0 0/55% 100% no-repeat}
-  .band.right::before{left:7%}
-  .band.right::after{right:7%;transform:scaleX(-1)}
-  .band i{position:absolute;z-index:1;left:31%;right:31%;top:0;border-radius:9999px;background:var(--paper);will-change:transform;container-type:size;display:grid;place-items:center}
-  .band i b{writing-mode:vertical-rl;transform:rotate(180deg);font:700 min(50cqw,6.2cqh)/1 var(--f-body);letter-spacing:.24em;text-transform:uppercase;color:var(--wine);white-space:nowrap}
+  /* Pellicule : perforations blanches sur les deux bords, images du film au centre ; tout glisse au défilement */
+  .band::before,.band::after,.band i{content:"";position:absolute;top:calc(var(--bw)/2);bottom:calc(var(--bw)/2);background-repeat:repeat-y;background-position:0 var(--shift)}
+  .band::before,.band::after{width:15%;background-size:100% auto;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='30'%3E%3Crect x='2' y='5' width='16' height='16' rx='4.5' fill='%23fbf7f4'/%3E%3C/svg%3E")}
+  .band::before{left:7%}
+  .band::after{right:7%}
+  .band i{left:30%;right:30%;background-size:100% auto;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='58'%3E%3Crect x='0' y='4' width='40' height='50' rx='9' fill='%23000000' fill-opacity='.16'/%3E%3C/svg%3E")}
   .wrap{position:relative;z-index:1}
 }
 /* Ordinateur uniquement : le croquis se dessine, et un curseur rond accompagne la souris */
@@ -152,8 +144,8 @@ footer{margin-top:28px;display:flex;justify-content:space-between;gap:8px;flex-w
 </style>
 </head>
 <body>
-<div class="band left" aria-hidden="true"><i><b>Cinéma</b></i></div>
-<div class="band right" aria-hidden="true"><i><b>Architecture</b></i></div>
+<div class="band left" aria-hidden="true"><i></i></div>
+<div class="band right" aria-hidden="true"><i></i></div>
 <div class="wrap">
   <div class="topline">
     <span class="label">Architecture intérieure · Décor de cinéma</span>
@@ -268,21 +260,14 @@ document.querySelectorAll('.copy').forEach(function(b){
 <script>
 (function(){
   var mq=matchMedia('(min-width:1240px) and (hover:hover) and (pointer:fine)');
-  var bands=[].slice.call(document.querySelectorAll('.band')),slots=bands.map(function(b){return b.querySelector('i')});
-  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,cur=0,target=0,running=false;
-  function progress(){var max=document.documentElement.scrollHeight-innerHeight;return max>0?Math.min(1,Math.max(0,scrollY/max)):0}
-  function size(){bands.forEach(function(b,i){var w=b.clientWidth*.38;slots[i].style.height=Math.min(innerHeight*.7,Math.max(w*3.2,innerHeight*.5))+'px'})}
-  function place(p){bands.forEach(function(b,i){
-    var bh=b.clientHeight,sh=slots[i].offsetHeight,inset=b.clientWidth*.16,pad=Math.max(28,innerHeight*.06);
-    var view=(1-p)*innerHeight-sh/2;                     /* en haut de page : moitié haute visible en bas de l'écran ; en bas de page : moitié basse visible en haut de l'écran ; au milieu : entière */
-    var y=scrollY+view-b.offsetTop;                      /* convertie dans la bande, qui défile avec la page */
-    y=Math.min(bh-sh-inset,Math.max(inset,y));
-    slots[i].style.transform='translateY('+y+'px)'})}
-  function tick(){cur+=(target-cur)*.12;place(cur);if(Math.abs(target-cur)>.0005){requestAnimationFrame(tick)}else{cur=target;place(cur);running=false}}
-  function update(){if(!mq.matches)return;target=progress();if(reduce||!running){place(cur)}if(reduce){cur=target;place(cur);return}if(!running){running=true;requestAnimationFrame(tick)}}
-  addEventListener('scroll',update,{passive:true});addEventListener('resize',function(){size();place(cur);update()});
-  size();
-  cur=target=progress();place(cur);
+  var bands=[].slice.call(document.querySelectorAll('.band'));
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,cur=scrollY,running=false;
+  /* La pellicule défile : les perforations avancent plus vite que la page, dans le même sens sur les deux bandes */
+  function place(y){bands.forEach(function(b){b.style.setProperty('--shift',(-y*.6)+'px')})}
+  function tick(){cur+=(scrollY-cur)*.14;place(cur);if(Math.abs(scrollY-cur)>.3){requestAnimationFrame(tick)}else{cur=scrollY;place(cur);running=false}}
+  function update(){if(!mq.matches)return;if(reduce){cur=scrollY;place(cur);return}if(!running){running=true;requestAnimationFrame(tick)}}
+  addEventListener('scroll',update,{passive:true});
+  place(cur);
 })();
 </script>
 </body>
