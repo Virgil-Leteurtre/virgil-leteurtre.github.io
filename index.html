@@ -114,6 +114,18 @@ footer{margin-top:28px;display:flex;justify-content:space-between;gap:8px;flex-w
   @keyframes ink{from{letter-spacing:.04em;filter:blur(2px)}to{letter-spacing:-.01em;filter:none}}
 }
 @media (prefers-reduced-motion:reduce){.strip img,.door{transition:none}}
+/* Ordinateur uniquement : le croquis se dessine, et un curseur rond accompagne la souris */
+.cursor{display:none}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .cover img{animation:draw 2.2s cubic-bezier(.65,0,.25,1) .25s both}
+  @keyframes draw{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+  .cursor{display:grid;place-items:center;position:fixed;left:0;top:0;z-index:50;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--wine);pointer-events:none;opacity:0;transition:width .3s cubic-bezier(.2,.8,.2,1),height .3s cubic-bezier(.2,.8,.2,1),margin .3s cubic-bezier(.2,.8,.2,1),background .3s,opacity .3s}
+  .cursor span{font:600 10px/1 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--wine-ink);opacity:0;transition:opacity .2s}
+  .cursor.on{opacity:1}
+  .cursor.big{width:84px;height:84px;margin:-42px 0 0 -42px}
+  .cursor.big span{opacity:1}
+  .cursor.soft{width:44px;height:44px;margin:-22px 0 0 -22px;background:color-mix(in srgb,var(--wine) 18%,transparent)}
+}
 </style>
 </head>
 <body>
@@ -209,5 +221,24 @@ document.querySelectorAll('.copy').forEach(function(b){
 });
 </script>
 
+<div class="cursor" aria-hidden="true"><span>Voir</span></div>
+<script>
+(function(){
+  if(!matchMedia('(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)').matches)return;
+  var c=document.querySelector('.cursor'),x=0,y=0,cx=0,cy=0,started=false;
+  addEventListener('mousemove',function(e){x=e.clientX;y=e.clientY;if(!started){cx=x;cy=y;started=true;c.classList.add('on');loop()}});
+  document.addEventListener('mouseleave',function(){c.classList.remove('on')});
+  document.addEventListener('mouseenter',function(){if(started)c.classList.add('on')});
+  function loop(){cx+=(x-cx)*.2;cy+=(y-cy)*.2;c.style.transform='translate3d('+cx+'px,'+cy+'px,0)';requestAnimationFrame(loop)}
+  document.querySelectorAll('.strip a,.door').forEach(function(a){
+    a.addEventListener('mouseenter',function(){c.classList.add('big')});
+    a.addEventListener('mouseleave',function(){c.classList.remove('big')});
+  });
+  document.querySelectorAll('a:not(.door):not(.strip a),button').forEach(function(a){
+    a.addEventListener('mouseenter',function(){c.classList.add('soft')});
+    a.addEventListener('mouseleave',function(){c.classList.remove('soft')});
+  });
+})();
+</script>
 </body>
 </html>
