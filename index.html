@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Virgil Leteurtre, architecte d'intérieur et designer, assistant décorateur cinéma. Portfolio, CV et contact.">
+<meta property="og:title" content="Virgil Leteurtre · Assistant décorateur cinéma">
+<meta property="og:description" content="Architecte d'intérieur et designer. Portfolio, CV et contact.">
+<meta property="og:image" content="img/croquis-ciam.jpg">
+<meta name="theme-color" content="#fbf7f4">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Virgil Leteurtre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;1,500;1,600&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout : la couverture du portfolio prolongée en page. Croquis en tête, nom en italique bordeaux, deux portes d'entrée (portfolio, CV), une bande de projets, le contact. Pensé d'abord pour un téléphone qui vient de scanner un QR code. */
+:root{
+  --paper:#fbf7f4; --panel:#ffffff; --ink:#24191b; --muted:#76696b; --rule:#e4dcdc;
+  --wine:#7b1e2c; --wine-ink:#ffffff; --wine-soft:#f3e7e8;
+  --f-display:"Cormorant","Cormorant Garamond",Garamond,"Times New Roman",serif;
+  --f-body:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#171213; --panel:#211a1b; --ink:#f1eaea; --muted:#ad9fa1; --rule:#3a2f31;
+  --wine:#d4707e; --wine-ink:#1a1011; --wine-soft:#2d1d20; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#171213; --panel:#211a1b; --ink:#f1eaea; --muted:#ad9fa1; --rule:#3a2f31;
+  --wine:#d4707e; --wine-ink:#1a1011; --wine-soft:#2d1d20; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--wine);outline-offset:3px}
+.label{font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+
+/* Bandeau haut, comme l'en-tête des pages du portfolio */
+.topline{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1.5px solid var(--wine);padding-bottom:10px}
+.topline .label:first-child{color:var(--wine)}
+
+/* Couverture */
+.cover{position:relative;margin-top:22px;background:#fbf7f4;border-radius:28px;overflow:hidden;aspect-ratio:1354/880;max-width:100%}
+@media (max-width:560px){.cover{aspect-ratio:1354/1020}}
+.cover img{position:absolute;left:0;right:0;bottom:0;display:block;width:100%;max-width:100%;height:auto;aspect-ratio:1354/756;object-fit:cover}
+.cover-text{position:absolute;z-index:1;left:clamp(16px,4vw,40px);right:16px;top:clamp(14px,3.5vw,36px)}
+h1{font-family:var(--f-display);font-style:italic;font-weight:600;color:#7b1e2c;font-size:clamp(46px,9.5vw,104px);line-height:.88;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.cover-text p{margin:8px 0 0;font-size:clamp(10px,1.6vw,13px);font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#5c4a4c}
+
+/* Intro + accès */
+.intro{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(24px,5vw,56px);margin-top:32px;align-items:start}
+@media (max-width:720px){.intro{grid-template-columns:1fr}}
+.role{font-family:var(--f-body);font-weight:700;font-size:clamp(20px,2.8vw,26px);line-height:1.2;letter-spacing:.1em;text-transform:uppercase;margin:0 0 14px;color:var(--ink);text-wrap:balance}
+.role em{font-style:normal;color:var(--wine)}
+.h-struct{font-family:var(--f-body);font-weight:700;text-transform:uppercase;letter-spacing:.12em;line-height:1.15;margin:0;text-wrap:balance}
+.intro p{margin:0;max-width:32em;color:var(--ink)}
+.doors{display:grid;gap:12px}
+.door{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px;text-decoration:none;padding:18px 18px 18px 24px;border:1.5px solid var(--wine);border-radius:28px;transition:background .2s,color .2s,transform .2s}
+.door:hover{transform:translateY(-2px)}
+.door .arrow{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid currentColor}
+.door.primary .arrow{background:var(--wine-ink);color:var(--wine);border-color:var(--wine-ink)}
+.door strong{display:block;font-family:var(--f-display);font-style:italic;font-weight:600;font-size:30px;line-height:1}
+.door span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+.door .arrow{font-size:22px;line-height:1}
+.door.primary{background:var(--wine);color:var(--wine-ink)}
+.door.primary span{color:var(--wine-ink);opacity:.8}
+.door:not(.primary){color:var(--wine)}
+.door:not(.primary):hover{background:var(--wine-soft)}
+.door.primary:hover{filter:brightness(1.08)}
+.avail{margin-top:4px;font-size:13px;color:var(--muted)}
+.avail b{color:var(--ink);font-weight:600}
+
+/* Repères */
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:44px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.facts div{padding:16px 16px 16px 0}
+.facts div+div{padding-left:16px;border-left:1px solid var(--rule)}
+.facts b{display:block;font-family:var(--f-display);font-style:italic;font-weight:600;font-size:22px;line-height:1.1;color:var(--wine)}
+.facts span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+@media (max-width:720px){.facts{grid-template-columns:1fr 1fr}.facts div:nth-child(3){padding-left:0;border-left:0}.facts div:nth-child(n+3){border-top:1px solid var(--rule)}}
+
+/* Sélection */
+.sel-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:44px;flex-wrap:wrap}
+.sel-head h2{font-size:clamp(20px,2.8vw,26px);color:var(--ink)}
+.sel-head a{font-size:13px;font-weight:600;color:var(--wine);text-decoration:none;border:1px solid var(--wine);border-radius:999px;padding:8px 16px}
+.sel-head a:hover{background:var(--wine-soft)}
+.strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:18px}
+@media (max-width:720px){.strip{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:72%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}}
+.strip a{text-decoration:none;scroll-snap-align:start;min-width:0}
+.strip img{display:block;width:100%;max-width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:24px;background:var(--rule);transition:transform .35s ease}
+.strip a:hover img{transform:scale(1.02)}
+.strip .num{font-size:11px;font-weight:600;letter-spacing:.18em;color:var(--wine);margin-top:10px;display:block}
+.strip h3{font-family:var(--f-display);font-style:italic;font-weight:600;font-size:24px;line-height:1.05;margin:2px 0 2px}
+.strip p{margin:0;font-size:13px;color:var(--muted)}
+
+/* Contact */
+.contact{margin-top:48px;background:var(--panel);border:1px solid var(--rule);border-radius:28px;padding:clamp(22px,4vw,36px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:24px}
+@media (max-width:720px){.contact{grid-template-columns:1fr}}
+.contact h2{font-size:clamp(20px,2.8vw,26px);color:var(--ink);margin:0 0 10px}
+.contact h2 em{font-style:normal;color:var(--wine)}
+.contact > div > p{margin:0;color:var(--muted);font-size:14px;max-width:24em}
+.lines{display:grid;gap:0}
+.line{display:grid;grid-template-columns:90px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule)}
+.line:last-child{border-bottom:0}
+.line .val{font-size:16px;word-break:break-word;user-select:all;font-variant-numeric:tabular-nums}
+.line .val a{text-decoration:none;display:inline-block;background:var(--wine-soft);color:var(--wine);font-weight:500;border-radius:999px;padding:6px 14px}
+.line .val a:hover{filter:brightness(.97)}
+.copy{font:600 11px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--wine);background:transparent;border:1px solid var(--wine);border-radius:999px;padding:9px 14px;cursor:pointer;white-space:nowrap}
+.copy:hover{background:var(--wine-soft)}
+@media (max-width:420px){.line{grid-template-columns:1fr auto}.line .label{grid-column:1/-1}}
+
+footer{margin-top:28px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+
+@media (prefers-reduced-motion:no-preference){
+  h1{animation:ink .9s ease-out both}
+  @keyframes ink{from{letter-spacing:.04em;filter:blur(2px)}to{letter-spacing:-.01em;filter:none}}
+}
+@media (prefers-reduced-motion:reduce){.strip img,.door{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topline">
+    <span class="label">Architecture intérieure · Décor de cinéma</span>
+    <span class="label">Sélection de travaux 2021–2026</span>
+  </div>
+
+  <header class="cover">
+    <img src="img/croquis-ciam.jpg" alt="Croquis au crayon de la façade de l'école de musique du CIAM à Bordeaux, projet Membrane">
+    <div class="cover-text">
+      <h1>Virgil<br>Leteurtre</h1>
+      <p>Architecte d'intérieur &amp; designer</p>
+    </div>
+  </header>
+
+  <section class="intro">
+    <div>
+      <p class="role">Assistant décorateur <em>cinéma</em></p>
+      <p>Je recherche un poste d'assistant décorateur dans le cinéma. Diplômé de LISAA Bordeaux, formé deux ans en agence, je suis passé par l'équipe déco du <i>Règne animal</i> de Thomas Cailley. J'aime partir d'un personnage et d'un récit pour imaginer le lieu où il vit.</p>
+    </div>
+    <div class="doors">
+      <a class="door primary" href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+        <div><strong>Portfolio</strong><span>10 projets · PDF, 25 pages</span></div><span class="arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="door" href="CV_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+        <div><strong>CV</strong><span>Parcours, logiciels, contact · PDF</span></div><span class="arrow" aria-hidden="true">↗</span>
+      </a>
+      <p class="avail"><b>Disponible</b> · partout en France · permis B</p>
+    </div>
+  </section>
+
+  <section class="facts" aria-label="Repères">
+    <div><b>Le Règne animal</b><span>Stage déco · Nord-Ouest Films</span></div>
+    <div><b>L'Atelier D</b><span>2 ans d'alternance · Mérignac</span></div>
+    <div><b>LISAA Bordeaux</b><span>Titre RNCP niveau 7</span></div>
+    <div><b>Projet élu</b><span>CDC Habitat · choisi par le client parmi les projets de l'école</span></div>
+  </section>
+
+  <section aria-labelledby="sel">
+    <div class="sel-head">
+      <h2 id="sel" class="h-struct">Quelques projets</h2>
+      <a href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">Tout voir dans le portfolio</a>
+    </div>
+    <div class="strip">
+      <a href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+        <img src="img/membrane.jpg" alt="Couloir aux parois ondulées en bois clair, projet Membrane" loading="lazy">
+        <span class="num">01</span><h3>Membrane</h3><p>École de musique · projet de fin d'études</p>
+      </a>
+      <a href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+        <img src="img/mongiron.jpg" alt="Salon en pierre et poutres apparentes, projet Montgiron" loading="lazy">
+        <span class="num">07</span><h3>Montgiron</h3><p>Rénovation · bâtisse en pierre</p>
+      </a>
+      <a href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+        <img src="img/obadia.jpg" alt="Bureau sur fond bordeaux avec rangements en bois, projet Obadia" loading="lazy">
+        <span class="num">04</span><h3>Obadia</h3><p>Appartement · mobilier sur mesure</p>
+      </a>
+      <a href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+        <img src="img/fracture.jpg" alt="Canapé modulable en éléments arrondis dans un salon vitré, projet Fracture" loading="lazy">
+        <span class="num">10</span><h3>Fracture</h3><p>Design · canapé modulable</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="contact" aria-labelledby="ct">
+    <div>
+      <h2 id="ct" class="h-struct">Besoin d'un <em>assistant déco</em>&nbsp;?</h2>
+      <p>Je cherche une première expérience comme assistant décorateur sur un film, une série ou une pub. Préparation, installation, accessoires, présence sur le tournage : je peux être là rapidement.</p>
+    </div>
+    <div class="lines">
+      <div class="line"><span class="label">Téléphone</span><span class="val" id="tel"><a href="tel:+33783296032">07 83 29 60 32</a></span><button class="copy" type="button" id="copy-tel" data-target="tel">Copier</button></div>
+      <div class="line"><span class="label">Mail</span><span class="val" id="mail">virgilleteurtre@gmail.com</span><button class="copy" type="button" id="copy-mail" data-target="mail">Copier</button></div>
+      <div class="line"><span class="label">LinkedIn</span><span class="val"><a href="https://www.linkedin.com/in/virgil-leteurtre-b4b375235/" target="_blank" rel="noopener">Virgil Leteurtre</a></span><span></span></div>
+      <div class="line"><span class="label">Instagram</span><span class="val"><a href="https://www.instagram.com/virgil_leteurtre/" target="_blank" rel="noopener">@virgil_leteurtre</a></span><span></span></div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="label">Virgil Leteurtre</span>
+    <span class="label">Mobile toute la France</span>
+  </footer>
+</div>
+
+<script>
+document.querySelectorAll('.copy').forEach(function(b){
+  b.addEventListener('click',function(){
+    var el=document.getElementById(b.dataset.target), t=el.textContent.trim();
+    function done(msg){b.textContent=msg;setTimeout(function(){b.textContent='Copier'},1800)}
+    function select(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);done('Sélectionné')}
+    try{navigator.clipboard.writeText(t).then(function(){done('Copié')},select)}catch(e){select()}
+  });
+});
+</script>
+
+</body>
+</html>
