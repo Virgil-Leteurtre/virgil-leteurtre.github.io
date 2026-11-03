@@ -114,6 +114,24 @@ footer{margin-top:28px;display:flex;justify-content:space-between;gap:8px;flex-w
   @keyframes ink{from{letter-spacing:.04em;filter:blur(2px)}to{letter-spacing:-.01em;filter:none}}
 }
 @media (prefers-reduced-motion:reduce){.strip img,.door{transition:none}}
+/* Téléphone : les projets sur une pellicule horizontale qu'on déroule au doigt */
+.reel-wrap{margin-top:18px;margin-left:calc(-1*max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1*max(16px,env(safe-area-inset-right,0px)))}
+.reel{overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:max(16px,env(safe-area-inset-left,0px));-webkit-overflow-scrolling:touch;scrollbar-width:none;border-block:1.5px solid var(--wine)}
+.reel::-webkit-scrollbar{display:none}
+.reel-track{display:flex;gap:14px;width:max-content;padding-block:30px;padding-inline:max(16px,env(safe-area-inset-left,0px));
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='12'%3E%3Crect x='7' width='12' height='12' rx='3' fill='%237b1e2c'/%3E%3C/svg%3E"),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='12'%3E%3Crect x='7' width='12' height='12' rx='3' fill='%237b1e2c'/%3E%3C/svg%3E");
+  background-repeat:repeat-x;background-position:0 9px,0 calc(100% - 9px);background-size:26px 12px}
+.shot{flex:none;width:min(58vw,230px);scroll-snap-align:start;text-decoration:none;color:inherit;display:block}
+.shot img{display:block;width:100%;max-width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:14px;border:1.5px solid var(--wine);background:var(--wine-soft)}
+.shot .num{display:block;margin-top:10px;font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--wine);font-variant-numeric:tabular-nums}
+.shot h3{font-family:var(--f-display);font-style:italic;font-weight:600;font-size:23px;line-height:1.05;margin:2px 0 3px;color:var(--ink)}
+.shot p{margin:0;font-size:12.5px;line-height:1.35;color:var(--muted)}
+.reel-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
+.reel-hint{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.reel-btns{display:flex;gap:8px}
+.reel-btns button{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--wine);background:transparent;color:var(--wine);font-size:17px;cursor:pointer}
+.reel-btns button:hover{background:var(--wine-soft)}
+.reel-btns button:disabled{opacity:.3;cursor:default}
 /* Ordinateur large : deux bandes bordeaux de part et d'autre du contenu, une pastille claire y glisse au défilement */
 .band{display:none}
 @media (min-width:1240px) and (hover:hover) and (pointer:fine){
@@ -193,26 +211,58 @@ footer{margin-top:28px;display:flex;justify-content:space-between;gap:8px;flex-w
 
   <section class="projets" aria-labelledby="sel">
     <div class="sel-head">
-      <h2 id="sel" class="h-struct">Quelques projets</h2>
+      <h2 id="sel" class="h-struct">Projets</h2>
       <a href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">Tout voir dans le portfolio</a>
     </div>
-    <div class="strip">
-      <a href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
-        <img src="img/membrane.jpg" alt="Couloir aux parois ondulées en bois clair, projet Membrane" loading="lazy">
-        <span class="num">01</span><h3>Membrane</h3><p>École de musique · projet de fin d'études</p>
-      </a>
-      <a href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
-        <img src="img/mongiron.jpg" alt="Salon en pierre et poutres apparentes, projet Montgiron" loading="lazy">
-        <span class="num">07</span><h3>Montgiron</h3><p>Rénovation · bâtisse en pierre</p>
-      </a>
-      <a href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
-        <img src="img/obadia.jpg" alt="Bureau sur fond bordeaux avec rangements en bois, projet Obadia" loading="lazy">
-        <span class="num">04</span><h3>Obadia</h3><p>Appartement · mobilier sur mesure</p>
-      </a>
-      <a href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
-        <img src="img/fracture.jpg" alt="Canapé modulable en éléments arrondis dans un salon vitré, projet Fracture" loading="lazy">
-        <span class="num">10</span><h3>Fracture</h3><p>Design · canapé modulable</p>
-      </a>
+    <div class="reel-wrap">
+      <div class="reel" id="reel" tabindex="0" aria-label="Projets, faites glisser pour dérouler la pellicule">
+        <div class="reel-track">
+        <a class="shot" href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+          <img src="img/projets/membrane.jpg" alt="Couloir aux parois ondulées en bois clair, projet Membrane" loading="lazy" decoding="async">
+          <span class="num">01</span><h3>Membrane</h3><p>Rénovation d'une école de musique · projet de fin d'études</p>
+        </a>
+        <a class="shot" href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+          <img src="img/projets/regne-animal.jpg" alt="Clap du tournage du Règne animal, projet Le Règne animal" loading="lazy" decoding="async">
+          <span class="num">02</span><h3>Le Règne animal</h3><p>Stage déco · long métrage de Thomas Cailley</p>
+        </a>
+        <a class="shot" href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+          <img src="img/projets/nal.jpg" alt="Salle de bain avec grand miroir rond, projet NAL" loading="lazy" decoding="async">
+          <span class="num">03</span><h3>NAL</h3><p>Rénovation d'un appartement locatif</p>
+        </a>
+        <a class="shot" href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+          <img src="img/projets/obadia.jpg" alt="Chambre aux murs bordeaux et vert, projet Obadia" loading="lazy" decoding="async">
+          <span class="num">04</span><h3>Obadia</h3><p>Appartement adapté en location premium</p>
+        </a>
+        <a class="shot" href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+          <img src="img/projets/hegoburu.jpg" alt="Terrasse sous pergola végétalisée, projet Hegoburu" loading="lazy" decoding="async">
+          <span class="num">05</span><h3>Hegoburu</h3><p>Réhabilitation d'une échoppe familiale</p>
+        </a>
+        <a class="shot" href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+          <img src="img/projets/dubon.jpg" alt="Claustra bibliothèque en bois et vitrail, projet Dubon" loading="lazy" decoding="async">
+          <span class="num">06</span><h3>Dubon</h3><p>Rénovation d'un appartement de 180 m²</p>
+        </a>
+        <a class="shot" href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+          <img src="img/projets/montgiron.jpg" alt="Salon en pierre avec fauteuils en cuir, projet Montgiron" loading="lazy" decoding="async">
+          <span class="num">07</span><h3>Montgiron</h3><p>Rénovation d'une bâtisse en pierre, secteur Saint-Émilion</p>
+        </a>
+        <a class="shot" href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+          <img src="img/projets/ose.jpg" alt="Chambre avec lit cabane en bois, projet OSE" loading="lazy" decoding="async">
+          <span class="num">08</span><h3>OSE</h3><p>Maison ressource pour enfants en difficulté</p>
+        </a>
+        <a class="shot" href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+          <img src="img/projets/le-refuge.jpg" alt="Salle de pause avec murs végétaux, projet Le refuge" loading="lazy" decoding="async">
+          <span class="num">09</span><h3>Le refuge</h3><p>Une salle de pause comme un refuge hors du temps</p>
+        </a>
+        <a class="shot" href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">
+          <img src="img/projets/fracture.jpg" alt="Canapé rond modulable, projet Fracture" loading="lazy" decoding="async">
+          <span class="num">10</span><h3>Fracture</h3><p>Canapé-salon convertible et modulable</p>
+        </a>
+        </div>
+      </div>
+      <div class="reel-nav">
+        <span class="reel-hint">Faites glisser pour dérouler</span>
+        <span class="reel-btns"><button type="button" id="reel-prev" aria-label="Projet précédent">←</button><button type="button" id="reel-next" aria-label="Projet suivant">→</button></span>
+      </div>
     </div>
   </section>
 
@@ -255,11 +305,11 @@ document.querySelectorAll('.copy').forEach(function(b){
   document.addEventListener('mouseleave',function(){c.classList.remove('on')});
   document.addEventListener('mouseenter',function(){if(started)c.classList.add('on')});
   function loop(){cx+=(x-cx)*.2;cy+=(y-cy)*.2;c.style.transform='translate3d('+cx+'px,'+cy+'px,0)';requestAnimationFrame(loop)}
-  document.querySelectorAll('.strip a,.door').forEach(function(a){
+  document.querySelectorAll('.strip a,.shot,.door').forEach(function(a){
     a.addEventListener('mouseenter',function(){c.classList.add('big')});
     a.addEventListener('mouseleave',function(){c.classList.remove('big')});
   });
-  document.querySelectorAll('a:not(.door):not(.strip a),button').forEach(function(a){
+  document.querySelectorAll('a:not(.door):not(.strip a):not(.shot),button').forEach(function(a){
     a.addEventListener('mouseenter',function(){c.classList.add('soft')});
     a.addEventListener('mouseleave',function(){c.classList.remove('soft')});
   });
@@ -296,6 +346,18 @@ document.querySelectorAll('.copy').forEach(function(b){
   }
   fill();addEventListener('resize',fill);addEventListener('load',fill);
   place(cur);
+})();
+</script>
+<script>
+(function(){
+  var r=document.getElementById('reel');if(!r)return;
+  var prev=document.getElementById('reel-prev'),next=document.getElementById('reel-next');
+  function step(){var f=r.querySelector('.shot');return f?f.getBoundingClientRect().width+14:240}
+  function upd(){prev.disabled=r.scrollLeft<4;next.disabled=r.scrollLeft+r.clientWidth>=r.scrollWidth-4}
+  prev.addEventListener('click',function(){r.scrollBy({left:-step(),behavior:'smooth'})});
+  next.addEventListener('click',function(){r.scrollBy({left:step(),behavior:'smooth'})});
+  r.addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
+  r.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();next.click()}if(e.key==='ArrowLeft'){e.preventDefault();prev.click()}});
 })();
 </script>
 </body>
