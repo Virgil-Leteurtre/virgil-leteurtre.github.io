@@ -126,7 +126,15 @@ footer{margin-top:28px;display:flex;justify-content:space-between;gap:8px;flex-w
   .band::before,.band::after{width:12px;background-size:12px 26px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='26'%3E%3Crect width='12' height='12' rx='3' fill='%237b1e2c'/%3E%3C/svg%3E")}
   .band::before{left:12px}
   .band::after{right:12px}
-  .band i{display:block;left:40px;right:40px;background-size:100% auto;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='134'%3E%3Crect x='1' y='7' width='98' height='120' rx='12' fill='none' stroke='%237b1e2c' stroke-opacity='.45' stroke-width='1.5' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E")}
+  .band i{display:none}
+  /* Les projets défilent dans les images de la pellicule */
+  .band .track{position:absolute;left:40px;right:40px;top:0;display:flex;flex-direction:column;gap:14px;padding-top:10px;transform:translate3d(0,var(--shift),0);will-change:transform}
+  .band .frame{position:relative;display:block;aspect-ratio:4/5;border-radius:12px;overflow:hidden;border:1.5px solid var(--wine);background:var(--wine-soft);pointer-events:auto;text-decoration:none}
+  .band .frame img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+  .band .frame:hover img{transform:scale(1.06)}
+  .band .frame span{position:absolute;left:8px;right:8px;bottom:8px;padding:5px 8px;border-radius:999px;background:var(--paper);color:var(--wine);font:600 10px/1.2 var(--f-body);letter-spacing:.12em;text-transform:uppercase;text-align:center;opacity:0;transform:translateY(4px);transition:opacity .25s,transform .25s}
+  .band .frame:hover span,.band .frame:focus-visible span{opacity:1;transform:none}
+  .projets{display:none}
   .wrap{position:relative;z-index:1}
 }
 /* Ordinateur uniquement : le croquis se dessine, et un curseur rond accompagne la souris */
@@ -144,8 +152,8 @@ footer{margin-top:28px;display:flex;justify-content:space-between;gap:8px;flex-w
 </style>
 </head>
 <body>
-<div class="band left" aria-hidden="true"><i></i></div>
-<div class="band right" aria-hidden="true"><i></i></div>
+<div class="band left"><div class="track"></div></div>
+<div class="band right"><div class="track"></div></div>
 <div class="wrap">
   <div class="topline">
     <span class="label">Architecture intérieure · Décor de cinéma</span>
@@ -183,7 +191,7 @@ footer{margin-top:28px;display:flex;justify-content:space-between;gap:8px;flex-w
     <div><b>Projet élu</b><span>CDC Habitat · choisi par le client parmi les projets de l'école</span></div>
   </section>
 
-  <section aria-labelledby="sel">
+  <section class="projets" aria-labelledby="sel">
     <div class="sel-head">
       <h2 id="sel" class="h-struct">Quelques projets</h2>
       <a href="Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">Tout voir dans le portfolio</a>
@@ -267,6 +275,26 @@ document.querySelectorAll('.copy').forEach(function(b){
   function tick(){cur+=(scrollY-cur)*.14;place(cur);if(Math.abs(scrollY-cur)>.3){requestAnimationFrame(tick)}else{cur=scrollY;place(cur);running=false}}
   function update(){if(!mq.matches)return;if(reduce){cur=scrollY;place(cur);return}if(!running){running=true;requestAnimationFrame(tick)}}
   addEventListener('scroll',update,{passive:true});
+  /* Remplir chaque pellicule avec les projets du portfolio */
+  var PROJ=[["membrane","Membrane"],["regne-animal","Le Règne animal"],["nal","NAL"],["obadia","Obadia"],["hegoburu","Hegoburu"],["dubon","Dubon"],["montgiron","Montgiron"],["ose","OSE"],["le-refuge","Le refuge"],["fracture","Fracture"]];
+  var cursor=document.querySelector('.cursor');
+  function fill(){
+    if(!mq.matches)return;
+    var H=document.documentElement.scrollHeight,need=H+0.6*Math.max(0,H-innerHeight)+400;
+    bands.forEach(function(b,bi){
+      var tr=b.querySelector('.track');if(!tr)return;
+      var i=tr.children.length,k=bi*5;
+      while(tr.scrollHeight<need&&i<80){
+        var p=PROJ[(k+i)%PROJ.length],a=document.createElement('a');
+        a.className='frame';a.href='Portfolio_Virgil_Leteurtre.pdf';a.target='_blank';a.rel='noopener';a.setAttribute('aria-label','Projet '+p[1]+', voir le portfolio');
+        if(i>=PROJ.length)a.tabIndex=-1;
+        a.innerHTML='<img src="img/projets/'+p[0]+'.jpg" alt="" loading="lazy" decoding="async"><span>'+p[1]+'</span>';
+        if(cursor){a.addEventListener('mouseenter',function(){cursor.classList.add('big')});a.addEventListener('mouseleave',function(){cursor.classList.remove('big')})}
+        tr.appendChild(a);i++;
+      }
+    });
+  }
+  fill();addEventListener('resize',fill);addEventListener('load',fill);
   place(cur);
 })();
 </script>
