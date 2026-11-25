@@ -65,7 +65,7 @@ Virgil débute en code : expliquer chaque étape simplement, en français, une �
   « CINÉMA » de l'accueil clamp(84px, 11vw, 170px) ; titres de cartes 28px ; titres de fenêtres clamp(38px, 6vw, 68px).
 - IBM Plex Mono : petites mentions façon clap (« SC. 01 — Prise 01 », numéros de carte), 10–13px, letter-spacing .14–.2em.
 - Manrope : texte courant 14–17px, boutons 14px 600.
-- Mise à jour du 25/11/2026 : dans AUXO, la Bodoni est réservée aux titres ; les textes à lire (chapeaux, fiches, liens des fenêtres) passent en Newsreader, plus douce (Virgil trouvait la Bodoni illisible en texte long).
+- Mise à jour du 25/11/2026 : dans AUXO, la Bodoni est réservée aux titres ; les textes à lire (chapeaux, fiches, liens des fenêtres) passent en Newsreader, plus douce (Virgil trouvait la Bodoni illisible en texte long). Les titres AUXO restent en Bodoni mais « renforcée » (taille optique 28, graisse 500, règle dans `src/styles/global.css`) : les traits très fins de la Bodoni d'affiche étaient jugés illisibles, même en titre.
 - Bodoni Moda : tout l'univers AUXO (titre projets clamp(40px, 6vw, 76px), titres projets 30px italique).
 
 ### Mise en page

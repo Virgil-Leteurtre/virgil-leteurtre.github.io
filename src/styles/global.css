@@ -40,3 +40,11 @@ img, svg, video { display: block; max-width: 100%; }
 a { color: inherit; }
 ::selection { background: var(--encre); color: var(--fond); }
 :focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+
+/* Univers AUXO : titres en Bodoni « renforcée » (traits fins épaissis via l'axe de taille optique),
+   plus lisible que la Bodoni d'affiche très contrastée (demande de Virgil, 25/11/2026). */
+:root[data-univers="auxo"] :is(h1, h2, h3, .projet__titre, .p-voisin strong, .bulles button) {
+  font-optical-sizing: none;
+  font-variation-settings: 'opsz' 28;
+  font-weight: 500;
+}
