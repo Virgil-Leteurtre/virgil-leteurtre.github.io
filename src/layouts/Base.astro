@@ -1,0 +1,62 @@
+---
+// Police hébergée sur le site (pas chez Google) : plus rapide et conforme au RGPD
+import '@fontsource-variable/bodoni-moda/opsz.css';
+import '@fontsource-variable/bodoni-moda/opsz-italic.css';
+import 'lenis/dist/lenis.css';
+import '../styles/global.css';
+import ThemeToggle from '../components/ThemeToggle.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** « auxo » : crème/bordeaux, bouton lune. « cinema » : photo du tournage, bouton MODE NUIT/JOUR propre à la page. */
+  univers?: 'auxo' | 'cinema';
+}
+
+const { title = 'Virgil Leteurtre', description = 'Virgil Leteurtre', univers = 'auxo' } = Astro.props;
+const cleTheme = univers === 'cinema' ? 'cinema-theme' : 'auxo-theme';
+---
+
+<!doctype html>
+<html lang="fr" data-univers={univers}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/img/fond-tournage-nb.jpg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {
+      univers === 'cinema' ? (
+        <meta name="theme-color" content="#1A1714" />
+      ) : (
+        <>
+          <meta name="theme-color" content="#FFF6E7" media="(prefers-color-scheme: light)" />
+          <meta name="theme-color" content="#4E0000" media="(prefers-color-scheme: dark)" />
+        </>
+      )
+    }
+    <!-- ajouts propres à une page (ex. les polices de l'univers Cinéma) -->
+    <slot name="tete" />
+    <script is:inline define:vars={{ cleTheme }}>
+      // avant le premier affichage : thème choisi + marqueur « JavaScript actif » (aucun clignotement)
+      (function () {
+        var r = document.documentElement;
+        r.classList.add('js');
+        try {
+          var t = localStorage.getItem(cleTheme);
+          if (t) r.dataset.theme = t;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    {univers === 'auxo' && <ThemeToggle />}
+    <slot />
+    <script>
+      import '../scripts/defilement';
+    </script>
+  </body>
+</html>

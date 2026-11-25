@@ -1,0 +1,185 @@
+---
+// Page Cinéma : assistant décorateur. Version validée par Virgil (reprise de 01_Prospection/Site web/cinema.html).
+import { Font, Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import clap from '../assets/site/tournage-clap.jpg';
+import foret from '../assets/site/tournage-foret.jpg';
+import '../styles/cinema.css';
+
+// 6 cartes « La suite… » après Le Règne animal : rotation et décalage de chacune (éventail validé)
+const cartesVides = [
+  { sc: '02', rot: 5, y: 30 },
+  { sc: '03', rot: -4, y: 14 },
+  { sc: '04', rot: 2, y: 40 },
+  { sc: '05', rot: -6, y: 20 },
+  { sc: '06', rot: 3, y: 44 },
+  { sc: '07', rot: 6, y: 16 },
+];
+---
+
+<Base
+  title="Cinéma — Virgil Leteurtre, assistant décorateur"
+  description="Virgil Leteurtre, architecte d'intérieur et designer, cherche un poste d'assistant décorateur (film, série, pub). Stage déco sur Le Règne animal de Thomas Cailley."
+  univers="cinema"
+>
+  <Fragment slot="tete">
+    <Font cssVariable="--police-anton" preload />
+    <Font cssVariable="--police-plex" />
+    <Font cssVariable="--police-manrope" />
+  </Fragment>
+
+  <a class="lien-evitement" href="#contenu">Aller au contenu</a>
+  <div class="fond fond--flou" aria-hidden="true"></div>
+  <div class="voile" aria-hidden="true"></div>
+
+  <div class="page">
+    <nav class="nav cadre" aria-label="Navigation principale">
+      <div class="verre">
+        <a class="nav__nom" href="/">Virgil Leteurtre</a>
+        <div class="nav__liens">
+          <a href="/cinema" aria-current="page">Cinéma</a>
+          <a href="/studio-auxo">Studio AUXO</a>
+          <button class="bouton-mode" type="button" id="mode" aria-label="Changer de mode jour / nuit">MODE NUIT</button>
+        </div>
+      </div>
+    </nav>
+
+    <main id="contenu">
+      <header class="entete">
+        <span class="surtitre">SC. 01 — Prise 01 · Assistant décorateur — film, série, pub</span>
+        <h1 class="titre-cine" id="titre">La créativité au service d'une histoire</h1>
+      </header>
+
+      <section aria-label="Mes cartes">
+        <div class="jeu">
+          <button class="carte carte--regne" type="button" data-ouvre="regne" style="--i:0;--rot:-3deg;--y:0px" aria-label="Le Règne animal — voir mon stage déco">
+            <span class="verre">
+              <Image class="carte__photo" src={clap} alt="" widths={[300, 588]} sizes="240px" />
+              <span class="carte__ombre"></span>
+              <span class="carte__label">SC. 01 · 2022</span>
+              <span class="carte__titre"><span>Le Règne</span><span>animal</span></span>
+              <span class="carte__survol">
+                <strong>Le Règne animal</strong>
+                <span>Stage déco · Thomas Cailley · Nord-Ouest Films · 2022</span>
+                <span class="carte__action">CLIQUER POUR VOIR →</span>
+              </span>
+            </span>
+          </button>
+          {
+            cartesVides.map((c, n) => (
+              <button
+                class="carte"
+                type="button"
+                data-ouvre="contact"
+                style={`--i:${n + 1};--rot:${c.rot}deg;--y:${c.y}px`}
+                aria-label="La suite est entre vos mains — me contacter"
+              >
+                <span class="verre">
+                  <span class="carte__label">SC. {c.sc}</span>
+                  <span class="carte__titre">
+                    <span>La suite…</span>
+                    <span>…entre vos mains</span>
+                  </span>
+                  <span class="carte__survol">
+                    <strong>Écrivons la suite</strong>
+                    <span>
+                      Instagram · @virgil_leteurtre
+                      <br />
+                      LinkedIn · Virgil Leteurtre
+                      <br />
+                      virgilleteurtre@gmail.com
+                    </span>
+                    <span class="carte__action">CLIQUER POUR ME CONTACTER →</span>
+                  </span>
+                </span>
+              </button>
+            ))
+          }
+        </div>
+        <span class="aide"></span>
+        <div class="boutons">
+          <button class="petit-bouton" type="button" data-ouvre="portfolio"><span class="verre">PORTFOLIO</span></button>
+          <button class="petit-bouton" type="button" data-ouvre="cv"><span class="verre">CV</span></button>
+          <button class="petit-bouton" type="button" data-ouvre="contact"><span class="verre">CONTACT</span></button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ============ CARTES OUVERTES ============ -->
+  <dialog class="fenetre fenetre--large" id="fenetre-regne" aria-labelledby="t-regne">
+    <div class="cadre">
+      <div class="verre" data-lenis-prevent>
+        <div class="fenetre__haut"><span>SC. 01 · 2022</span><button class="fermer" type="button" aria-label="Fermer">×</button></div>
+        <div class="fenetre__photos">
+          <Image src={clap} alt="Clap sur le tournage du Règne animal" widths={[588]} sizes="(max-width: 560px) 100vw, 560px" loading="lazy" />
+          <Image src={foret} alt="Le Règne animal — décor en forêt" widths={[321]} sizes="(max-width: 560px) 100vw, 380px" loading="lazy" />
+        </div>
+        <h2 id="t-regne">Le Règne animal</h2>
+        <p>
+          Thomas Cailley · Nord-Ouest Films<br />Stage au sein de l'équipe décoration du long métrage, aux côtés de la cheffe décoratrice Julia
+          Lemaire : recherches, éléments graphiques et accessoires, montage de décors et présence sur le tournage. Cette expérience nourrit encore ma
+          manière de concevoir des espaces à partir d'un récit, d'un cadrage et de scènes de vie.
+        </p>
+        <!-- Fiche du film : informations publiques (Festival de Cannes, CNC, dossier pédagogique Éduscol), vérifiées le 25/11/2026 -->
+        <dl class="fiche-film">
+          <div><dt>Réalisation</dt><dd>Thomas Cailley</dd></div>
+          <div><dt>Scénario</dt><dd>Thomas Cailley, Pauline Munier</dd></div>
+          <div><dt>Avec</dt><dd>Romain Duris, Paul Kircher, Adèle Exarchopoulos</dd></div>
+          <div><dt>Sortie</dt><dd>4 octobre 2023 · 2 h 08</dd></div>
+          <div><dt>Production</dt><dd>Nord-Ouest Films, Studiocanal, France 2 Cinéma, Artémis Productions</dd></div>
+          <div><dt>Festival</dt><dd>Film d'ouverture d'Un Certain Regard, Cannes 2023</dd></div>
+        </dl>
+        <div class="liens">
+          <a class="lien-plein" href="/Portfolio_Virgil_Leteurtre.pdf#page=8" target="_blank" rel="noopener">Voir dans le portfolio</a>
+          <a class="lien-plein" href="https://www.festival-cannes.com/fr/2023/film/le-regne-animal/" target="_blank" rel="noopener">Fiche du film ↗</a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="fenetre" id="fenetre-contact" aria-labelledby="t-contact">
+    <div class="cadre">
+      <div class="verre" data-lenis-prevent>
+        <div class="fenetre__haut"><span>CONTACT</span><button class="fermer" type="button" aria-label="Fermer">×</button></div>
+        <h2 id="t-contact">La suite est entre vos mains</h2>
+        <p>Film, série ou pub : je cherche un poste d'assistant décorateur. Préparation, installation, accessoires, présence sur le tournage. Disponible partout en France · permis B.</p>
+        <div class="liens">
+          <a class="lien-plein" href="tel:+33783296032">07 83 29 60 32</a>
+          <a class="lien-plein" href="mailto:virgilleteurtre@gmail.com">virgilleteurtre@gmail.com</a>
+          <a class="lien-plein" href="https://www.instagram.com/virgil_leteurtre/" target="_blank" rel="noopener">Instagram</a>
+          <a class="lien-plein" href="https://www.linkedin.com/in/virgil-leteurtre-b4b375235/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="fenetre" id="fenetre-cv" aria-labelledby="t-cv">
+    <div class="cadre">
+      <div class="verre" data-lenis-prevent>
+        <div class="fenetre__haut"><span>CV</span><button class="fermer" type="button" aria-label="Fermer">×</button></div>
+        <h2 id="t-cv">Mon CV</h2>
+        <p>Diplômé en architecture intérieure et design à LISAA Bordeaux (titre RNCP niveau 7), deux ans d'alternance à L'Atelier D à Mérignac, stage déco sur Le Règne animal.</p>
+        <div class="liens"><a class="lien-plein" href="/CV_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">Télécharger le CV (PDF)</a></div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="fenetre" id="fenetre-portfolio" aria-labelledby="t-portfolio">
+    <div class="cadre">
+      <div class="verre" data-lenis-prevent>
+        <div class="fenetre__haut"><span>PORTFOLIO</span><button class="fermer" type="button" aria-label="Fermer">×</button></div>
+        <h2 id="t-portfolio">Portfolio</h2>
+        <p>Sélection de travaux 2021—2026 : architecture intérieure, design de mobilier et décor de cinéma.</p>
+        <div class="liens">
+          <a class="lien-plein" href="/Portfolio_Virgil_Leteurtre.pdf" target="_blank" rel="noopener">Ouvrir le portfolio (PDF)</a>
+          <a class="lien-plein" href="/studio-auxo">Voir les projets du Studio AUXO</a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</Base>
+
+<script>
+  import '../scripts/cinema';
+</script>

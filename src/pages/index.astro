@@ -1,0 +1,57 @@
+---
+// Accueil : la « porte d'entrée en deux » (Cinéma | Studio AUXO). Version validée par Virgil.
+import { Font } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Logo from '../components/directions/Logo.astro';
+import '../styles/cinema.css';
+---
+
+<Base
+  title="Virgil Leteurtre — Cinéma · Studio AUXO"
+  description="Virgil Leteurtre, architecte d'intérieur et designer. Cinéma : assistant décorateur (film, série, pub). Studio AUXO : architecture intérieure et mobilier."
+  univers="cinema"
+>
+  <Fragment slot="tete">
+    <Font cssVariable="--police-anton" preload />
+    <Font cssVariable="--police-plex" />
+    <Font cssVariable="--police-manrope" />
+  </Fragment>
+
+  <div class="fond fond--net" aria-hidden="true"></div>
+  <div class="voile" aria-hidden="true" style="background: rgba(22,18,15,.6)"></div>
+
+  <main class="accueil">
+    <h1 class="accueil__nom cadre" style="margin: 0; font: inherit"><span class="verre">Virgil Leteurtre</span></h1>
+
+    <div class="portes">
+      <a class="porte porte--verre" href="/cinema">
+        <span class="verre">
+          <span class="porte__haut"><span>SC. 01 — PRISE 01</span><span>FILM · SÉRIE · PUB</span></span>
+          <span style="display: flex; flex-direction: column; gap: 14px">
+            <span class="porte__cinema">Cinéma</span>
+            <span class="porte__sous">Assistant décorateur — entrer dans le décor <span class="fleche">→</span></span>
+          </span>
+        </span>
+      </a>
+      <a class="porte" href="/studio-auxo">
+        <span class="porte__auxo">
+          <small>Architecture intérieure · Mobilier</small>
+          <Logo class="porte__logo" />
+          <em>Entrer dans le studio <span class="fleche">→</span></em>
+        </span>
+      </a>
+    </div>
+  </main>
+</Base>
+
+<script>
+  import '../scripts/cinema';
+</script>
+
+<style is:global>
+  .porte__logo {
+    width: min(340px, 80%);
+    height: auto;
+    color: var(--bordeaux);
+  }
+</style>

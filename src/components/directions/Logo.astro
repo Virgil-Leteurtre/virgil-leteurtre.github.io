@@ -1,0 +1,19 @@
+---
+// Logo Studio AUXO en petit (en-têtes, pieds de page) : tracés repris tels quels du fichier d'Illustrator.
+import logoBrut from '../../assets/logo/studio-auxo.svg?raw';
+
+interface Props {
+  variante?: 'complet' | 'monogramme';
+  class?: string;
+}
+const { variante = 'complet', class: classe } = Astro.props;
+const traces = [...logoBrut.matchAll(/<path[^>]*\sd="([^"]+)"/g)].map((m) => m[1]);
+const complet = logoBrut.match(/viewBox="([^"]+)"/)?.[1] ?? '0 0 1334.11 683.46';
+// le bloc S+A seul (mesuré dans le navigateur : x 0 → 309,6 ; y 2,6 → 677,3)
+const viewBox = variante === 'monogramme' ? '-2 0 314 680' : complet;
+const affiches = variante === 'monogramme' ? traces.slice(0, 2) : traces;
+---
+
+<svg class={classe} viewBox={viewBox} role="img" aria-label="Studio AUXO" fill="currentColor">
+  {affiches.map((d) => <path d={d} />)}
+</svg>

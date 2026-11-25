@@ -1,0 +1,50 @@
+<button class="theme" type="button" aria-label="Passer en mode jour ou nuit" data-theme-toggle>
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg>
+</button>
+
+<script>
+  const root = document.documentElement;
+  const estSombre = () =>
+    root.dataset.theme
+      ? root.dataset.theme === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((bouton) =>
+    bouton.addEventListener('click', () => {
+      const theme = estSombre() ? 'light' : 'dark';
+      root.dataset.theme = theme;
+      try {
+        localStorage.setItem('auxo-theme', theme);
+      } catch (e) {}
+    }),
+  );
+</script>
+
+<style>
+  .theme {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 50;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    background: transparent;
+    color: var(--encre);
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease, color 0.6s ease;
+  }
+  .theme:hover {
+    opacity: 1;
+  }
+  .theme svg {
+    width: 18px;
+    height: 18px;
+    margin: auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+  }
+</style>

@@ -1,0 +1,519 @@
+/* =========================================================
+   Virgil Leteurtre — feuille de style « Cinéma » + accueil
+   Version validée par Virgil (reprise à l'identique de 01_Prospection/Site web, 25/11/2026).
+   Seul changement : polices servies par le site (variables --police-*), plus Google Fonts.
+   Couleurs de la DA : bordeaux #4E0000, crème #FFF6E7
+   ========================================================= */
+
+:root {
+  --bordeaux: #4E0000;
+  --creme: #FFF6E7;
+  --blanc-casse: #F3EDE3;
+
+  /* mode nuit (par défaut) : verre blanc, sans cadre rouge */
+  --texte: var(--blanc-casse);
+  --discret: rgba(243, 237, 227, .72);
+  --voile: rgba(22, 18, 15, .5);
+  --verre: rgba(255, 255, 255, .1);
+  --verre-fort: rgba(40, 32, 28, .55);
+  --point: rgba(255, 255, 255, .16);
+  --cadre-epaisseur: 0px;
+  --cadre: transparent;
+  --cadre-ombre: 0 26px 54px rgba(0, 0, 0, .35);
+  --bouton-fond: var(--bordeaux);
+  --bouton-texte: var(--blanc-casse);
+
+  --titre: var(--police-anton, 'Anton'), 'Impact', sans-serif;
+  --texte-courant: var(--police-manrope, 'Manrope'), system-ui, sans-serif;
+  --mono: var(--police-plex, 'IBM Plex Mono'), ui-monospace, monospace;
+  --douceur: cubic-bezier(.2, .8, .2, 1);
+}
+
+/* mode jour : verre clair, cadre bordeaux fin */
+:root[data-theme="jour"] {
+  --texte: var(--bordeaux);
+  --discret: rgba(78, 0, 0, .75);
+  --voile: rgba(240, 233, 222, .72);
+  --verre: rgba(255, 255, 255, .4);
+  --verre-fort: rgba(255, 250, 244, .72);
+  --point: rgba(78, 0, 0, .12);
+  --cadre-epaisseur: 3px;
+  --cadre: linear-gradient(145deg, #A0362C 0%, #4E0000 40%, #2A0000 100%);
+  --cadre-ombre: inset 0 1px 0 rgba(255, 220, 210, .6), 0 22px 44px rgba(0, 0, 0, .28), 0 2px 4px rgba(0, 0, 0, .2);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  color: var(--texte);
+  background: #1A1714;
+  font-family: var(--texte-courant);
+  line-height: 1.6;
+  transition: color .6s ease;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; }
+button, a { touch-action: manipulation; }
+.lien-evitement { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 12px 18px; border-radius: 999px; background: var(--bordeaux); color: var(--blanc-casse); text-decoration: none; }
+.lien-evitement:focus { top: 12px; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- Fond : photo du tournage, noir et blanc ---------- */
+.fond {
+  position: fixed;
+  inset: -40px;
+  z-index: -2;
+  background: #1A1714 center / cover no-repeat;
+  transform: translate3d(var(--px, 0), var(--py, 0), 0) scale(1.04);
+  transition: transform .8s var(--douceur);
+  animation: projecteur 1.6s ease-out both;
+}
+.fond--flou { background-image: url("/img/fond-tournage-flou.jpg"); }
+.fond--net { background-image: url("/img/fond-tournage-nb.jpg"); }
+.voile {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--voile);
+  transition: background-color .6s ease;
+  pointer-events: none;
+}
+/* grain de pellicule */
+.voile::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background-image: radial-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px);
+  background-size: 3px 3px;
+  animation: grain .9s steps(4) infinite;
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-1px, 2px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-2px, -2px); }
+  100% { transform: translate(1px, 1px); }
+}
+@keyframes projecteur {
+  0% { opacity: 0; filter: brightness(2.2); }
+  12% { opacity: .9; }
+  18% { opacity: .35; }
+  30% { opacity: 1; filter: brightness(1.3); }
+  100% { opacity: 1; filter: brightness(1); }
+}
+
+/* ---------- Verre (petits points) + cadre ---------- */
+.cadre {
+  padding: var(--cadre-epaisseur);
+  background: var(--cadre);
+  box-shadow: var(--cadre-ombre);
+  border-radius: 18px;
+}
+.verre {
+  position: relative;
+  overflow: hidden;
+  border-radius: calc(18px - var(--cadre-epaisseur));
+  background-color: var(--verre);
+  background-image: radial-gradient(circle, var(--point) 0, var(--point) .7px, transparent 1.1px);
+  background-size: 6px 6px;
+  -webkit-backdrop-filter: blur(22px) saturate(130%);
+  backdrop-filter: blur(22px) saturate(130%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3), inset 0 2px 6px rgba(0, 0, 0, .22);
+  transition: background-color .6s ease;
+}
+/* reflet en biais sur la vitre */
+.verre::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(118deg, rgba(255, 255, 255, .26) 0%, rgba(255, 255, 255, 0) 36%);
+  pointer-events: none;
+}
+.verre > * { position: relative; }
+
+/* ---------- Mise en page ---------- */
+.page {
+  width: min(1248px, 100% - 2 * clamp(16px, 5vw, 96px));
+  margin: 0 auto;
+  padding: clamp(16px, 3vw, 36px) 0 clamp(40px, 6vw, 72px);
+}
+
+/* ---------- Navigation ---------- */
+.nav { border-radius: 999px; position: sticky; top: 12px; z-index: 20; }
+.nav .verre {
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 6px 6px clamp(16px, 2vw, 26px);
+  flex-wrap: wrap;
+}
+.nav__nom {
+  font-family: var(--titre);
+  font-size: clamp(17px, 2vw, 22px);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.nav__liens { display: flex; align-items: center; gap: 2px; flex-wrap: wrap; }
+.nav__liens a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 clamp(10px, 1.4vw, 18px);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 999px;
+}
+.nav__liens a[aria-current="page"] { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
+.bouton-mode {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--bouton-fond);
+  color: var(--bouton-texte);
+  font: 500 12px/1 var(--mono);
+  letter-spacing: .14em;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 210, 200, .45);
+}
+
+/* ---------- Titre ---------- */
+.entete { margin: clamp(36px, 5vw, 56px) 0 clamp(16px, 2vw, 24px); max-width: 1120px; }
+.surtitre {
+  display: block;
+  font: 400 clamp(11px, 1.2vw, 13px)/1.5 var(--mono);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--discret);
+  margin-bottom: 18px;
+}
+.titre-cine {
+  margin: 0;
+  font-family: var(--titre);
+  font-weight: 400;
+  font-size: clamp(44px, 7.4vw, 104px);
+  line-height: 1.02;
+  letter-spacing: .015em;
+  text-transform: uppercase;
+}
+.titre-cine .mot { display: inline-block; overflow: hidden; vertical-align: top; }
+.titre-cine .mot > span { display: inline-block; animation: generique 1s var(--douceur) both; animation-delay: calc(.5s + var(--n) * 70ms); }
+@keyframes generique {
+  from { transform: translateY(105%); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+/* ---------- Le jeu de cartes ---------- */
+.jeu {
+  position: relative;
+  height: 470px;
+  margin-top: 32px;
+}
+.carte {
+  --rot: 0deg;
+  --y: 0px;
+  position: absolute;
+  top: var(--y);
+  left: calc(var(--i) * (100% - 210px) / 6);
+  width: 210px;
+  height: 300px;
+  padding: var(--cadre-epaisseur);
+  border: 0;
+  border-radius: 18px;
+  background: var(--cadre);
+  box-shadow: var(--cadre-ombre);
+  color: var(--texte);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  z-index: calc(var(--i) + 1);
+  transform: rotate(var(--rot));
+  transform-origin: 50% 80%;
+  transition: transform .45s var(--douceur);
+  animation: distribuer .9s var(--douceur) backwards;
+  animation-delay: calc(1.1s + var(--i) * 90ms);
+}
+@keyframes distribuer {
+  from { opacity: 0; transform: translateY(140px) rotate(0deg); }
+  to { opacity: 1; transform: rotate(var(--rot)); }
+}
+.carte .verre {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 18px;
+}
+.carte__label {
+  font: 400 11px/1.4 var(--mono);
+  letter-spacing: .16em;
+  color: var(--discret);
+}
+.carte__titre {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--titre);
+  font-size: 28px;
+  line-height: 1.06;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.carte__survol { display: none; flex-direction: column; gap: 8px; font-size: 11px; line-height: 1.45; }
+.carte__survol strong { font: 400 24px/1.05 var(--titre); letter-spacing: .02em; text-transform: uppercase; }
+.carte__action { font: 400 10px/1.4 var(--mono); letter-spacing: .14em; }
+
+/* carte « Le Règne animal » : photo du tournage */
+.carte--regne .verre { color: var(--blanc-casse); }
+.carte--regne .carte__label { color: var(--blanc-casse); }
+.carte__photo, .carte__ombre { position: absolute !important; inset: 0; width: 100%; height: 100%; }
+.carte__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; }
+.carte__ombre { background: linear-gradient(180deg, rgba(20, 16, 14, .05) 25%, rgba(20, 16, 14, .88) 100%); }
+
+@media (hover: hover) {
+  .carte:hover, .carte:focus-visible {
+    z-index: 50;
+    transform: translateY(-34px) scale(1.42) rotate(0deg);
+  }
+  .carte:hover .carte__titre, .carte:focus-visible .carte__titre { display: none; }
+  .carte:hover .carte__survol, .carte:focus-visible .carte__survol { display: flex; }
+}
+
+.aide::after { content: "Survolez les cartes · cliquez pour ouvrir"; }
+@media (hover: none) { .aide::after { content: "Faites glisser les cartes · touchez pour ouvrir"; } }
+.aide {
+  display: block;
+  text-align: center;
+  font: 400 12px/1.5 var(--mono);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--discret);
+}
+
+/* ---------- Petits boutons ---------- */
+.boutons { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.petit-bouton {
+  padding: var(--cadre-epaisseur);
+  border: 0;
+  border-radius: 999px;
+  background: var(--cadre);
+  box-shadow: var(--cadre-ombre);
+  color: var(--texte);
+  cursor: pointer;
+  font: inherit;
+}
+.petit-bouton .verre {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 26px;
+  border-radius: 999px;
+  font: 400 12px/1 var(--mono);
+  letter-spacing: .18em;
+  transition: transform .3s var(--douceur);
+}
+.petit-bouton:hover .verre { transform: translateY(-2px); }
+
+/* ---------- Carte ouverte (le reste se floute) ---------- */
+.fenetre {
+  width: min(780px, 100% - 32px);
+  max-height: calc(100% - 32px);
+  padding: 0;
+  border: 0;
+  border-radius: 26px;
+  background: transparent;
+  color: var(--texte);
+  overflow: visible;
+}
+.fenetre--large { width: min(980px, 100% - 32px); }
+.fenetre::backdrop {
+  background: rgba(15, 12, 10, .35);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  animation: apparaitre .35s ease both;
+}
+.fenetre[open] { animation: ouvrir .5s var(--douceur) both; }
+@keyframes ouvrir { from { opacity: 0; transform: translateY(30px) scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes apparaitre { from { opacity: 0; } to { opacity: 1; } }
+.fenetre .cadre { border-radius: 26px; box-shadow: var(--cadre-ombre), 0 50px 120px rgba(0, 0, 0, .5); }
+.fenetre .verre {
+  border-radius: calc(26px - var(--cadre-epaisseur));
+  background-color: var(--verre-fort);
+  padding: clamp(22px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-height: calc(100svh - 40px);
+  overflow-y: auto;
+}
+.fenetre__haut { display: flex; justify-content: space-between; align-items: center; font: 400 12px/1 var(--mono); letter-spacing: .16em; }
+.fermer {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+.fenetre h2 {
+  margin: 0;
+  font-family: var(--titre);
+  font-weight: 400;
+  font-size: clamp(38px, 6vw, 68px);
+  line-height: 1.02;
+  letter-spacing: .015em;
+  text-transform: uppercase;
+}
+.fenetre p { margin: 0; font-size: 16px; line-height: 1.7; }
+.fenetre__photos { display: grid; grid-template-columns: 3fr 2fr; gap: 14px; }
+.fenetre__photos img { width: 100%; height: clamp(200px, 32vw, 380px); object-fit: cover; border-radius: 12px; }
+.liens { display: flex; flex-wrap: wrap; gap: 10px; }
+.lien-plein {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: var(--bordeaux);
+  color: var(--blanc-casse);
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255, 210, 200, .5);
+  transition: transform .3s var(--douceur);
+}
+.lien-plein:hover { transform: translateY(-2px); }
+
+/* ---------- Téléphone et tablette ---------- */
+@media (max-width: 1000px) {
+  .jeu {
+    height: auto;
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 28px 16px 36px;
+    margin-left: calc(-1 * clamp(16px, 5vw, 96px));
+    margin-right: calc(-1 * clamp(16px, 5vw, 96px));
+    scrollbar-width: none;
+  }
+  .jeu::-webkit-scrollbar { display: none; }
+  .carte {
+    position: relative;
+    left: auto;
+    top: auto;
+    flex: 0 0 min(62vw, 240px);
+    height: min(88vw, 340px);
+    scroll-snap-align: center;
+  }
+  .carte:nth-child(odd) { --rot: -2deg; }
+  .carte:nth-child(even) { --rot: 2deg; }
+  .carte__titre { font-size: 32px; }
+}
+@media (max-width: 560px) {
+  .nav .verre { border-radius: 26px; }
+  .nav { border-radius: 26px; }
+  .fenetre__photos { grid-template-columns: 1fr; }
+}
+
+/* ---------- Accueil ---------- */
+.accueil {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(16px, 3vw, 36px) clamp(16px, 6vw, 96px);
+  gap: clamp(20px, 3vw, 36px);
+}
+.accueil__nom { align-self: center; border-radius: 999px; animation: monter .9s var(--douceur) .3s both; }
+.accueil__nom .verre {
+  display: block;
+  border-radius: 999px;
+  padding: 11px 26px;
+  font-size: 13px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.portes {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 40px);
+  min-height: 520px;
+}
+.porte {
+  display: block;
+  padding: 3px;
+  border-radius: 26px;
+  text-decoration: none;
+  background: linear-gradient(145deg, #A0362C 0%, #4E0000 40%, #2A0000 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 220, 210, .6), 0 34px 70px rgba(0, 0, 0, .45), 0 2px 4px rgba(0, 0, 0, .3);
+  transition: transform .5s var(--douceur), box-shadow .5s var(--douceur);
+  animation: monter 1s var(--douceur) backwards;
+}
+.porte:nth-child(2) { animation-delay: .15s; }
+.porte--verre { padding: 0; background: transparent; box-shadow: 0 34px 70px rgba(0, 0, 0, .45); }
+.porte--verre:hover { box-shadow: 0 50px 90px rgba(0, 0, 0, .5); }
+.porte--verre .verre { border-radius: 26px; }
+.porte:hover { transform: translateY(-8px); box-shadow: inset 0 1px 0 rgba(255, 220, 210, .6), 0 50px 90px rgba(0, 0, 0, .5), 0 2px 4px rgba(0, 0, 0, .3); }
+@keyframes monter { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+.porte .verre, .porte__auxo {
+  height: 100%;
+  border-radius: 23px;
+  padding: clamp(24px, 3.5vw, 40px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+}
+.porte .verre { color: var(--blanc-casse); background-color: rgba(255, 255, 255, .08); --point: rgba(255, 255, 255, .16); }
+.porte__haut { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font: 400 12px/1.4 var(--mono); letter-spacing: .18em; }
+.porte__cinema { font: 400 clamp(84px, 11vw, 170px)/.9 var(--titre); text-transform: uppercase; letter-spacing: .01em; }
+.porte__sous { font-size: 17px; font-weight: 600; }
+.porte__auxo {
+  align-items: center;
+  text-align: center;
+  background: var(--creme);
+  color: var(--bordeaux);
+  font-family: var(--police);
+}
+.porte__auxo small { font-size: 12px; letter-spacing: .3em; text-transform: uppercase; }
+.porte__auxo img { width: min(340px, 80%); height: auto; }
+.porte__auxo em { font-size: 22px; }
+.fleche { display: inline-block; transition: transform .4s var(--douceur); }
+.porte:hover .fleche { transform: translateX(8px); }
+
+@media (max-width: 860px) {
+  .portes { grid-template-columns: 1fr; min-height: 0; }
+  .porte .verre, .porte__auxo { min-height: 300px; }
+}
+
+/* ---------- Mouvement réduit ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- Ajustement Astro : l'image optimisée porte directement la classe ---------- */
+img.carte__photo { object-fit: cover; object-position: 30% 50%; }
+
+/* ---------- Fiche du film (fenêtre Le Règne animal) ---------- */
+.fiche-film { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 28px; margin: 0; padding-top: 18px; border-top: 1px solid currentColor; }
+.fiche-film div { display: flex; flex-direction: column; gap: 4px; }
+.fiche-film dt { font: 400 11px/1.4 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--discret); }
+.fiche-film dd { margin: 0; font-size: 15px; line-height: 1.5; }
+@media (max-width: 560px) { .fiche-film { grid-template-columns: 1fr; } }

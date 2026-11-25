@@ -1,0 +1,42 @@
+/* Studio AUXO — styles communs à tout le site */
+
+:root {
+  --bordeaux: #4E0000;
+  --creme: #FFF6E7;
+  --fond: var(--creme);
+  --encre: var(--bordeaux);
+  --police: 'Bodoni Moda Variable', 'Bodoni Moda', Georgia, 'Times New Roman', serif;
+  color-scheme: light;
+}
+
+/* mode nuit : suit le réglage de l'appareil, sauf choix manuel (bouton lune) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fond: var(--bordeaux);
+    --encre: var(--creme);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --fond: var(--bordeaux);
+  --encre: var(--creme);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+
+body {
+  background: var(--fond);
+  color: var(--encre);
+  font-family: var(--police);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color .6s ease, color .6s ease;
+}
+
+img, svg, video { display: block; max-width: 100%; }
+a { color: inherit; }
+::selection { background: var(--encre); color: var(--fond); }
+:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
