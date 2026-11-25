@@ -5,6 +5,7 @@ import { Font, Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import IntroLogo from '../components/IntroLogo.astro';
 import Logo from '../components/directions/Logo.astro';
+import BullesAuxo from '../components/BullesAuxo.astro';
 import membrane from '../assets/site/membrane.jpg';
 import nal from '../assets/site/nal.jpg';
 import obadia from '../assets/site/obadia.jpg';
@@ -81,6 +82,8 @@ const projets = [
       <a href="/cinema">Cinéma</a>
     </div>
   </footer>
+
+  <BullesAuxo attendre />
 </Base>
 
 <script>
@@ -277,7 +280,7 @@ const projets = [
   .pied {
     width: min(1248px, 100% - 2 * clamp(20px, 6vw, 96px));
     margin: 0 auto;
-    padding: 48px 0 56px;
+    padding: 48px 0 110px;
     border-top: 1px solid var(--trait);
     display: flex;
     flex-wrap: wrap;

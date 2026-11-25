@@ -4,6 +4,7 @@
 // Contenu : src/data/projets.ts (repris du portfolio de Virgil).
 import { Font, Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
+import BullesAuxo from '../../components/BullesAuxo.astro';
 import { projets, type ProjetComplet } from '../../data/projets';
 
 export function getStaticPaths() {
@@ -154,6 +155,8 @@ const numero = String(rang + 1).padStart(2, '0');
       <a href="/cinema">Cinéma</a>
     </div>
   </footer>
+
+  <BullesAuxo />
 </Base>
 
 <script>
@@ -544,7 +547,7 @@ const numero = String(rang + 1).padStart(2, '0');
   .pied {
     width: min(1248px, 100% - 2 * clamp(20px, 6vw, 96px));
     margin: 0 auto;
-    padding: 40px 0 56px;
+    padding: 40px 0 110px;
     border-top: 1px solid var(--trait);
     display: flex;
     flex-wrap: wrap;
