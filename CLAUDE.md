@@ -31,7 +31,8 @@ Site vitrine de **Studio AUXO**, l'agence de Virgil. Objectif : un site haut de 
 - Aperçu : `npx astro dev --background`, puis http://localhost:4321 (arrêt : `npx astro dev stop`).
 - Vérification : `npm run build` doit finir sans erreur.
 
-## Mise en ligne (prévue, pas encore faite)
+## Mise en ligne (faite le 25/11/2026)
+- En ligne sur https://virgil-leteurtre.github.io : chaque envoi sur `main` du dépôt `Virgil-Leteurtre/virgil-leteurtre.github.io` reconstruit et publie le site (`.github/workflows/deploy.yml`, Pages en mode « GitHub Actions »). Demander l'accord de Virgil avant chaque publication.
 - GitHub Pages, publication automatique par GitHub Actions : workflow officiel Astro, à ajouter au moment de publier en vérifiant les versions sur https://docs.astro.build/en/guides/deploy/github
 - Le compte GitHub du PC héberge déjà un autre site : prévoir un **nom de domaine** (à choisir avec Virgil) ou une organisation GitHub.
 - Limites GitHub Pages : environ 1 Go de site et 100 Go de trafic par mois ; fait pour une vitrine, pas une boutique. Toutes les images passent par `astro:assets` (AVIF/WebP).
@@ -43,8 +44,8 @@ Site vitrine de **Studio AUXO**, l'agence de Virgil. Objectif : un site haut de 
    - Pages produites en `cinema.html` / `studio-auxo.html` (`build.format: 'file'`) et PDF aux mêmes noms que l'ancien site : les liens déjà envoyés restent valides.
    - Images dans `src/assets/site/`, fonds dans `public/img/`. Mes essais précédents sont dans `_archive/`, la copie de l'artefact dans `_reference/`.
 3. ✅ Texte d'introduction du Studio AUXO validé (25/11/2026). Images HD des projets reprises de `Desktop/Lisaa 2026` (25/11/2026), anciennes dans `_archive/images-basse-def/`. Pas d'original plus grand pour Le refuge, Dubon (893 px) ni Le Règne animal (photos trouvées sur Internet par Virgil) : à la place, fiche du film dans la fenêtre Règne animal (infos publiques + lien Festival de Cannes). Pas d'affiche ni d'image du film téléchargée (droits d'auteur).
-4. Pages : une page par projet (liens « Voir le projet » encore vides).
+4. ✅ Une page par projet (25/11/2026) : `src/pages/projets/[slug].astro`, contenu dans `src/data/projets.ts` (textes du portfolio), rendus dans `src/assets/projets/<projet>/` (tirés de `Desktop/Lisaa 2026`). La grille de `/studio-auxo` y mène. Erreurs de copier-coller du portfolio (Obadia, Hegoburu, Le refuge) écartées : à signaler à Virgil pour son PDF.
 5. Finitions : référencement (plan du site, vignettes de partage), formulaire de contact (service externe), contrôle de vitesse Lighthouse ≥ 90.
-6. Mise en ligne et nom de domaine, avec l'accord de Virgil.
+6. ✅ Mise en ligne (25/11/2026). Nom de domaine : plus tard, si Virgil le souhaite.
 
 Consignes du modèle Astro : @AGENTS.md

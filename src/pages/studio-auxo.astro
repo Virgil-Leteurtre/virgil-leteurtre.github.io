@@ -15,17 +15,17 @@ import ose from '../assets/site/ose.jpg';
 import refuge from '../assets/site/refuge.jpg';
 import fracture from '../assets/site/fracture.jpg';
 
-// nom, description, page du portfolio PDF, cadrage, arche
+// adresse de la page du projet, nom, description, page du portfolio PDF, cadrage, arche
 const projets = [
-  { nom: 'Membrane', desc: "Rénovation d'une école de musique — projet de fin d'études", page: 3, image: membrane, cadrage: '50% 50%', arche: true },
-  { nom: 'NAL', desc: "Rénovation d'un appartement locatif", page: 9, image: nal, cadrage: '50% 55%' },
-  { nom: 'Obadia', desc: 'Appartement adapté en location premium', page: 11, image: obadia, cadrage: '45% 60%' },
-  { nom: 'Hegoburu', desc: "Réhabilitation d'une échoppe familiale", page: 13, image: hegoburu, cadrage: '50% 55%' },
-  { nom: 'Dubon', desc: "Rénovation d'un appartement de 180 m²", page: 15, image: dubon, cadrage: '55% 40%', arche: true },
-  { nom: 'Mongiron', desc: "Rénovation d'une bâtisse en pierre près de Saint-Émilion", page: 17, image: montgiron, cadrage: '40% 60%' },
-  { nom: 'OSE', desc: 'Maison ressource pour enfants en difficulté', page: 20, image: ose, cadrage: '50% 60%' },
-  { nom: 'Le refuge', desc: 'Salle de pause pensée comme un refuge', page: 22, image: refuge, cadrage: '50% 50%', arche: true },
-  { nom: 'Fracture', desc: 'Canapé-salon convertible et modulable', page: 24, image: fracture, cadrage: '50% 50%' },
+  { slug: 'membrane', nom: 'Membrane', desc: "Rénovation d'une école de musique — projet de fin d'études", page: 3, image: membrane, cadrage: '50% 50%', arche: true },
+  { slug: 'nal', nom: 'NAL', desc: "Rénovation d'un appartement locatif", page: 9, image: nal, cadrage: '50% 55%' },
+  { slug: 'obadia', nom: 'Obadia', desc: 'Appartement adapté en location premium', page: 11, image: obadia, cadrage: '45% 60%' },
+  { slug: 'hegoburu', nom: 'Hegoburu', desc: "Réhabilitation d'une échoppe familiale", page: 13, image: hegoburu, cadrage: '50% 55%' },
+  { slug: 'dubon', nom: 'Dubon', desc: "Rénovation d'un appartement de 180 m²", page: 15, image: dubon, cadrage: '55% 40%', arche: true },
+  { slug: 'mongiron', nom: 'Mongiron', desc: "Rénovation d'une bâtisse en pierre près de Saint-Émilion", page: 17, image: montgiron, cadrage: '40% 60%' },
+  { slug: 'ose', nom: 'OSE', desc: 'Maison ressource pour enfants en difficulté', page: 20, image: ose, cadrage: '50% 60%' },
+  { slug: 'le-refuge', nom: 'Le refuge', desc: 'Salle de pause pensée comme un refuge', page: 22, image: refuge, cadrage: '50% 50%', arche: true },
+  { slug: 'fracture', nom: 'Fracture', desc: 'Canapé-salon convertible et modulable', page: 24, image: fracture, cadrage: '50% 50%' },
 ];
 ---
 
@@ -40,6 +40,7 @@ const projets = [
   <IntroLogo />
 
   <main class="suite" id="suite">
+    <span id="projets"></span>
     <div class="suite__tete reveler">
       <h2>Architecture intérieure <em>&amp; mobilier</em></h2>
       <!-- Texte d'introduction du Studio AUXO : écrit avec les mots de Virgil, validé le 25/11/2026 -->
@@ -52,7 +53,7 @@ const projets = [
     <div class="projets">
       {
         projets.map((p, i) => (
-          <a class:list={['projet', 'reveler', { 'projet--arche': p.arche }]} href={`/Portfolio_Virgil_Leteurtre.pdf#page=${p.page}`} target="_blank" rel="noopener">
+          <a class:list={['projet', 'reveler', { 'projet--arche': p.arche }]} href={`/projets/${p.slug}`}>
             <span class="projet__cadre">
               <span class="projet__vitre">
                 <Image src={p.image} alt={p.nom} widths={[480, 800, 1200, 1600]} sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 400px" style={`object-position: ${p.cadrage}`} />
@@ -83,21 +84,7 @@ const projets = [
 </Base>
 
 <script>
-  // les projets apparaissent au défilement
-  const aReveler = document.querySelectorAll('.reveler');
-  if ('IntersectionObserver' in window) {
-    const obs = new IntersectionObserver(
-      (entrees) =>
-        entrees.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('vu');
-            obs.unobserve(e.target);
-          }
-        }),
-      { rootMargin: '0px 0px -10% 0px' },
-    );
-    aReveler.forEach((el) => obs.observe(el));
-  } else aReveler.forEach((el) => el.classList.add('vu'));
+  import '../scripts/reveler';
 </script>
 
 <style is:global>
