@@ -34,7 +34,10 @@ const projets = [
   title="Studio AUXO — architecture intérieure et mobilier · Virgil Leteurtre"
   description="Studio AUXO, l'agence d'architecture intérieure et de design de mobilier de Virgil Leteurtre."
 >
-  <Font cssVariable="--police-manrope" slot="tete" />
+  <Fragment slot="tete">
+    <Font cssVariable="--police-manrope" />
+    <Font cssVariable="--police-lecture" />
+  </Fragment>
 
   <a class="retour" href="/" aria-label="Retour à l'accueil">← Accueil</a>
 

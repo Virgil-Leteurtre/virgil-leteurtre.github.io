@@ -12,7 +12,7 @@ Site vitrine de **Studio AUXO**, l'agence de Virgil. Objectif : un site haut de 
 ## Identité visuelle (validée)
 - Logo : `src/assets/logo/studio-auxo.svg`, export Illustrator de Virgil, à ne pas retoucher. 10 tracés : 2 pour le bloc S+A, puis t u d i o U X O.
 - Couleurs : bordeaux `#4E0000`, crème `#FFF6E7` (détails et autres couleurs : `DIRECTION-ARTISTIQUE.md`). AUXO : jour = fond crème, nuit = fond bordeaux, bouton lune. Cinéma : nuit par défaut, bouton MODE NUIT/JOUR.
-- Polices : Bodoni Moda (AUXO, `@fontsource-variable`), Anton, IBM Plex Mono et Manrope (Cinéma, via `fonts` dans `astro.config.mjs`). Toutes **hébergées sur le site**, jamais depuis Google Fonts (RGPD).
+- Polices : Bodoni Moda (AUXO, titres seulement, `@fontsource-variable`), Newsreader (AUXO, textes à lire : Bodoni jugée illisible en texte long par Virgil le 25/11/2026), Anton, IBM Plex Mono et Manrope (via `fonts` dans `astro.config.mjs`). Toutes **hébergées sur le site**, jamais depuis Google Fonts (RGPD).
 - Animation d'ouverture (`src/components/IntroLogo.astro`, validée le 24/11/2026) : le S+A apparaît au centre, glisse vers la gauche, le nom naît dans la forme du S (creux compris), l'ensemble finit centré. 4,1 s, joue une fois. Ne pas changer le rythme sans l'accord de Virgil.
   - En développement, ajouter `?t=1.6` à l'adresse fige l'animation à 1,6 s pour l'analyser.
 

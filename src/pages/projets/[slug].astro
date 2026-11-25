@@ -38,7 +38,10 @@ const numero = String(rang + 1).padStart(2, '0');
 ---
 
 <Base title={`${projet.nom} — ${projet.sujet} · Studio AUXO`} description={`${projet.nom} : ${projet.sujet}. ${projet.intro[0].slice(0, 120)}…`}>
-  <Font cssVariable="--police-manrope" slot="tete" />
+  <Fragment slot="tete">
+    <Font cssVariable="--police-manrope" />
+    <Font cssVariable="--police-lecture" />
+  </Fragment>
 
   <a class="retour" href="/studio-auxo#projets" aria-label="Retour aux projets du Studio AUXO">← Studio AUXO</a>
 
@@ -165,6 +168,7 @@ const numero = String(rang + 1).padStart(2, '0');
 
 <style is:global>
   :root {
+    --lecture: var(--police-lecture, 'Newsreader'), Georgia, serif;
     --manrope: var(--police-manrope, 'Manrope'), system-ui, sans-serif;
     --cadre: linear-gradient(145deg, #a0362c 0%, #4e0000 40%, #2a0000 100%);
     --doux: #6b2a22;
@@ -239,6 +243,7 @@ const numero = String(rang + 1).padStart(2, '0');
   }
   .p-sujet {
     margin: 22px 0 0;
+    font-family: var(--lecture);
     max-width: 22ch;
     font-size: clamp(22px, 2.4vw, 32px);
     line-height: 1.2;
@@ -356,6 +361,7 @@ const numero = String(rang + 1).padStart(2, '0');
   }
   .p-fiche dd {
     margin: 0;
+    font-family: var(--lecture);
     font-size: 19px;
     line-height: 1.35;
   }
@@ -378,9 +384,10 @@ const numero = String(rang + 1).padStart(2, '0');
   .p-intro .p-chapeau {
     max-width: 34ch;
     margin-bottom: 1.1em;
-    font-family: var(--police);
-    font-size: clamp(24px, 2.4vw, 32px);
-    line-height: 1.35;
+    font-family: var(--lecture);
+    font-size: clamp(21px, 2vw, 26px);
+    font-weight: 400;
+    line-height: 1.5;
     color: var(--encre);
   }
   .p-valeurs {
@@ -470,6 +477,7 @@ const numero = String(rang + 1).padStart(2, '0');
   }
 
   .p-portfolio {
+    font-family: var(--lecture);
     margin: clamp(56px, 8vw, 96px) 0;
     font-size: clamp(22px, 2.2vw, 28px);
     text-align: center;
