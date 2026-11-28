@@ -8,8 +8,10 @@ export default defineConfig({
   // Barre d'outils Astro masquée : l'aperçu reste identique au vrai site.
   devToolbar: { enabled: false },
 
-  // Pages produites en « cinema.html », « studio-auxo.html » : les liens de l'ancien site restent valides.
-  build: { format: 'file' },
+  // Pages produites en dossiers (cinema/index.html…) : /cinema et /cinema/ marchent toutes les deux.
+  // Les anciennes adresses en .html (cinema.html…) restent valides grâce aux petites pages de renvoi de public/.
+  trailingSlash: 'always',
+  build: { format: 'directory' },
 
   // Polices de l'univers Cinéma et de l'accueil (Bodoni Moda, elle, vient de @fontsource-variable).
   // Outil de polices intégré à Astro : téléchargées une fois (Fontsource) puis servies par le site lui-même.

@@ -43,7 +43,7 @@ const numero = String(rang + 1).padStart(2, '0');
     <Font cssVariable="--police-lecture" />
   </Fragment>
 
-  <a class="retour" href="/studio-auxo#projets" aria-label="Retour aux projets du Studio AUXO">← Studio AUXO</a>
+  <a class="retour" href="/studio-auxo/#projets" aria-label="Retour aux projets du Studio AUXO">← Studio AUXO</a>
 
   <main class="projet-page">
     <header class="p-tete">
@@ -135,7 +135,7 @@ const numero = String(rang + 1).padStart(2, '0');
           { p: precedent, sens: 'Projet précédent' },
           { p: suivant, sens: 'Projet suivant' },
         ].map(({ p, sens }) => (
-          <a class="p-voisin" href={`/projets/${p.slug}`}>
+          <a class="p-voisin" href={`/projets/${p.slug}/`}>
             <span class="p-voisin-arche">
               <Image src={p.images[0]} alt="" widths={[400, 700]} sizes="(max-width: 700px) 40vw, 260px" />
             </span>
@@ -151,11 +151,11 @@ const numero = String(rang + 1).padStart(2, '0');
   </main>
 
   <footer class="pied">
-    <a href="/studio-auxo#projets">Tous les projets du Studio AUXO</a>
+    <a href="/studio-auxo/#projets">Tous les projets du Studio AUXO</a>
     <div class="pied__liens">
       <a href="mailto:virgilleteurtre@gmail.com">virgilleteurtre@gmail.com</a>
       <a href="tel:+33783296032">07 83 29 60 32</a>
-      <a href="/cinema">Cinéma</a>
+      <a href="/cinema/">Cinéma</a>
     </div>
   </footer>
 
